@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #c8fcea; 
+  --color-secondary: #8e94f2;
+  --color-accent: #f7b2bd; 
+  --color-accent-content: #8f9aa3;
+  --color-base-100: #fbfbff;
+  --color-info: #8e94f2;
+  --color-success: #73e8c9;
+  --color-warning: #ffb547;
+  --color-error: #f76c6c;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Sora", sans-serif;
+}
+
+div,
+p,
+span,
+button {
+  font-family: "Inter", sans-serif;
+}
+
+a.active {
+  @apply font-bold text-secondary underline
+}
