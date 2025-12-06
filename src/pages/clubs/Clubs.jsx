@@ -1,8 +1,9 @@
+import Navbar from "../../components/navbar/Navbar";
 
 const Clubs = () => {
     return (
         <div>
-            this is club page
+           <Navbar />
         </div>
     );
 };

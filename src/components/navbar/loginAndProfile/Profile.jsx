@@ -19,13 +19,14 @@ const Profile = () => {
          {
             user ?
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
+        <div className="w-16 rounded-full border glass p-1">
           <img
+          className="rounded-full w-full"
             alt="Tailwind CSS Navbar component"
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
         </div>
          </div>
-         :  <Button name={`Login`}/>
+         :  <Link><Button name={`Login`}/></Link>
          }
         </label>
       </div>
@@ -35,7 +36,7 @@ const Profile = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 min-h-full w-80 p-4" onClick={() => {document.getElementById('my-drawer-5').checked = false}}>
+        <ul className="menu bg-base-100/80 min-h-full w-50 p-4" onClick={() => {document.getElementById('my-drawer-5').checked = false}}>
         {links}
         </ul>
       </div>

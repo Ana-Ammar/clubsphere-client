@@ -6,16 +6,15 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #c8fcea; 
-  --color-secondary: #8e94f2;
-  --color-accent: #f7b2bd; 
+  --color-primary: #6a72e4;
+  --color-secondary: #8ee6c5;
+  --color-accent: #eb6f82;
   --color-accent-content: #8f9aa3;
   --color-base-100: #fbfbff;
   --color-info: #8e94f2;
   --color-success: #73e8c9;
   --color-warning: #ffb547;
   --color-error: #f76c6c;
-
 }
 
 h1,
@@ -35,5 +34,5 @@ button {
 }
 
 a.active {
-  @apply font-bold text-secondary underline
+  @apply font-bold text-accent underline;
 }

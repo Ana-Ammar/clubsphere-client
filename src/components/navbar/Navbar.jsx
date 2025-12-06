@@ -38,11 +38,11 @@ const Navbar = () => {
                 </svg>
               </label>
             </div>
-            <h1 className="flex-1 font-bold text-2xl flex items-center">
-              ClubsPhere
+            <h1 className="flex-1 font-black text-3xl flex items-center">
+             <span className="bg-white/20 rounded-4xl py-2 px-4">ClubSphere</span>
             </h1>
             <div className="hidden flex-none lg:block">
-              <ul className="menu menu-horizontal">
+              <ul className="menu menu-horizontal bg-white/20 rounded-4xl mr-2">
                 {links}
               </ul>
             </div>
@@ -60,7 +60,6 @@ const Navbar = () => {
                   (document.getElementById("my-drawer-2").checked = false)
                 }
               >
-            {/* Sidebar content here */}
             {links}
           </ul>
         </div>
