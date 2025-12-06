@@ -36,7 +36,7 @@ const heroSlides = [
 
 const Banner = () => {
   return (
-    <header className="relative w-full h-[80vh]">
+    <header className="relative w-full h-[80vh] mx-auto">
       {/* Swiper Background */}
       <Swiper
         modules={[Pagination, Autoplay]}
