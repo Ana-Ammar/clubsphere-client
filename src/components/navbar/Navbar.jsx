@@ -16,7 +16,7 @@ const Navbar = () => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
-          <div className="navbar w-full md:px-8 px-4">
+          <section className="navbar w-full">
             <div className="flex-none lg:hidden">
               <label
                 htmlFor="my-drawer-2"
@@ -47,7 +47,7 @@ const Navbar = () => {
               </ul>
             </div>
             <Profile />
-          </div>
+          </section>
         </div>
 
         <div className="drawer-side">

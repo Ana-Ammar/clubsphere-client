@@ -36,3 +36,7 @@ button {
 a.active {
   @apply font-bold text-accent underline;
 }
+
+section {
+  @apply max-w-6xl mx-auto px-4
+}

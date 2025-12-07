@@ -1,12 +1,10 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import Navbar from "../navbar/Navbar";
 import banner1 from "../../assets/banner-1.jpg";
 import banner2 from "../../assets/banner-2.jpg";
 import banner3 from "../../assets/banner-3.jpg";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 
 const heroSlides = [
   {
@@ -39,8 +37,7 @@ const Banner = () => {
     <header className="relative w-full h-[80vh] mx-auto">
       {/* Swiper Background */}
       <Swiper
-        modules={[Pagination, Autoplay]}
-        pagination={{ clickable: true }}
+        modules={[ Autoplay]}
         autoplay={{ delay: 5000 }}
         loop
         className="w-full h-full"
