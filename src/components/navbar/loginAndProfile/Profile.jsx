@@ -8,13 +8,7 @@ const Profile = () => {
   const links = (
     <>
       <li>
-        <Link>Dashboard</Link>
-      </li>
-      <li>
-        <Link>Be a Manager</Link>
-      </li>
-      <li>
-        <Link>Create Club</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </li>
     </>
   );
@@ -72,7 +66,7 @@ const Profile = () => {
           className="drawer-overlay"
         ></label>
         <ul
-          className="menu bg-base-100/80 min-h-full space-y-2 w-50 p-4"
+          className="menu bg-base-100 space-y-2 w-50 p-4 rounded-2xl"
           onClick={() => {
             document.getElementById("my-drawer-5").checked = false;
           }}

@@ -6,6 +6,7 @@ import Events from "../pages/events/Events";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/login/Login";
 import SignUp from "../pages/auth/sign_up/SignUp";
+import Dashboard from "../layouts/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -39,5 +40,9 @@ export const router = createBrowserRouter([
                 element: <SignUp />
             }
         ]
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard />
     }
 ])
