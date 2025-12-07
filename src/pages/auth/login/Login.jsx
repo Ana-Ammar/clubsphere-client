@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Button from "../../../components/button/Button";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import BackButton from "../../../components/back_button/BackButton";
 import { useForm } from "react-hook-form";
+import GoogleLoginBtn from "../social_button/GoogleLoginBtn";
+import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [show, setShow] = useState(false);
+  const { signInWithEmail } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -16,7 +21,27 @@ const Login = () => {
   } = useForm();
 
   const handleLogin = (data) => {
-    console.log("Login form data:", data);
+    signInWithEmail(data.email, data.password)
+      .then((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Welcome Back!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(location?.state || "/");
+      })
+      .catch((err) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Something went wrong",
+          footer: `${err.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
 
   return (
@@ -34,8 +59,8 @@ const Login = () => {
           <p className="text-center w-3/4 lg:w-full opacity-90 text-sm">
             Enter your details and continue your journey with ClubSphere.
           </p>
-          <BackButton name={"Create Account"} link={`/sign-up`} />
-          <BackButton name={`Back`} link={`/`} />
+          <BackButton name="Create Account" link="/sign-up" />
+          <BackButton name="Back" link="/" />
         </div>
 
         {/* RIGHT — Login Form */}
@@ -43,29 +68,36 @@ const Login = () => {
           <h1 className="text-3xl font-bold">Login</h1>
 
           <div className="w-full lg:w-9/12 space-y-3 relative">
-            <form 
-            onSubmit={handleSubmit(handleLogin)}
-            className="flex flex-col items-center gap-4">
-              <input
-                type="email"
-                className="input-field"
-                placeholder="Email"
-                {...register("email", { required: "Email is required" })}
-              />
-              {errors.email && (
-                <p className="text-accent text-sm">{errors.email.message}</p>
-              )}
+            <form
+              onSubmit={handleSubmit(handleLogin)}
+              className="flex flex-col gap-4"
+            >
+              <div>
+                <input
+                  type="email"
+                  className="input-field"
+                  placeholder="Email"
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && (
+                  <p className="text-accent text-sm">{errors.email.message}</p>
+                )}
+              </div>
 
               <div className="w-full relative">
                 <input
                   type={show ? "text" : "password"}
-                {...register("password", {required: "Password is required"})}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className="input-field"
                   placeholder="Password"
                 />
                 {errors.password && (
-                <p className="text-accent text-sm">{errors.password.message}</p>
-              )}
+                  <p className="text-accent text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
 
                 <span
                   onClick={() => setShow(!show)}
@@ -83,6 +115,8 @@ const Login = () => {
 
               <Button name={`Login`}></Button>
             </form>
+            <div className="divider">Or</div>
+            <GoogleLoginBtn></GoogleLoginBtn>
           </div>
         </div>
       </div>

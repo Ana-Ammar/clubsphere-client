@@ -1,21 +1,89 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Button from "../../../components/button/Button";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import BackButton from "../../../components/back_button/BackButton";
+import GoogleLoginBtn from "../social_button/GoogleLoginBtn";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
+  const { createUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
+  const photoFile = useWatch({ control, name: "photo" })?.[0]?.name;
+
   const handleSignUp = (data) => {
-    console.log("Form Data:", data);
+    const uploadedImg = data.photo[0];
+    console.log(data);
+    createUser(data.email, data.password)
+      .then((res) => {
+        // upload image
+        const formData = new FormData();
+        formData.append("image", uploadedImg);
+
+        // image post to imagebb and link create
+        const image_api = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`;
+        axios.post(image_api, formData).then((res) => {
+            
+          // Add user to database
+          const userInfo = {
+            email: data.email,
+            displayName: data.displayName,
+            photoURL: res.data.data.url,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user created in the database");
+            }
+          });
+
+          // update user profile
+          const updatedData = {
+            displayName: data.displayName,
+            photoURL: res.data.data.url,
+          };
+          updateUserProfile(updatedData)
+            .then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Account created successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate(location.state || "/");
+            })
+            .catch((err) => {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Something went wrong",
+                footer: `${err.message}`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            });
+        });
+      })
+      .catch((err) => {
+        console.log("in Create user", err);
+      });
   };
   return (
     <section className="md:min-h-screen w-full flex justify-center items-center p-4">
@@ -29,38 +97,46 @@ const SignUp = () => {
               onSubmit={handleSubmit(handleSignUp)}
               className="flex flex-col gap-4"
             >
-              <input
-                type="name"
-                {...register("displayName", { required: "Name is required" })}
-                placeholder="Name"
-                className="input-field "
-              />
-              {errors.displayName && (
-                <p className="text-accent text-sm">
-                  {errors.displayName.message}
-                </p>
-              )}
+              <div>
+                <input
+                  type="name"
+                  {...register("displayName", { required: "Name is required" })}
+                  placeholder="Name"
+                  className="input-field "
+                />
+                {errors.displayName && (
+                  <p className="text-accent text-sm">
+                    {errors.displayName.message}
+                  </p>
+                )}
+              </div>
 
-              <input
-                type="photoUrl"
-                {...register("photoUrl", { required: "PhotoUrl is required" })}
-                placeholder="PhotoUrl"
-                className="input-field "
-              />
-              {errors.photoUrl && (
-                <p className="text-accent text-sm">{errors.photoUrl.message}</p>
-              )}
+              <div className="relative">
+                <label className="block bg-white border border-[#d9dceb] rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-[#8e94f2] text-sm text-accent-content cursor-pointer">
+                  {photoFile || "Upload Photo"}
+                  <input
+                    type="file"
+                    {...register("photo", { required: "Photo is required" })}
+                    className="hidden"
+                  />
+                </label>
+                {errors.photo && (
+                  <p className="text-accent text-sm">{errors.photo.message}</p>
+                )}
+              </div>
 
               {/* Email */}
-              <input
-                type="email"
-                {...register("email", { required: "Email is required" })}
-                placeholder="Email"
-                className="input-field "
-              />
-              {errors.email && (
-                <p className="text-accent text-sm">{errors.email.message}</p>
-              )}
+              <div>
+                <input
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                  placeholder="Email"
+                  className="input-field "
+                />
+                {errors.email && (
+                  <p className="text-accent text-sm">{errors.email.message}</p>
+                )}
+              </div>
 
               {/* Password */}
               <div className="relative w-full">
@@ -78,14 +154,18 @@ const SignUp = () => {
                 >
                   {show ? <FaEyeSlash /> : <FaEye />}
                 </span>
+                {errors.password && (
+                  <p className="text-accent text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-accent text-sm">{errors.password.message}</p>
-              )}
 
               {/* Submit Button */}
               <Button name={`Sign Up`}></Button>
             </form>
+            <div className="divider">Or</div>
+            <GoogleLoginBtn></GoogleLoginBtn>
           </div>
         </div>
 
