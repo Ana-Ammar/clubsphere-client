@@ -51,7 +51,7 @@ const WhyJoin = () => {
           >
             <div className="flex justify-center mb-3">{b.icon}</div>
             <h3 className="font-bold text-lg mb-1">{b.title}</h3>
-            <p className="text-gray-600">{b.desc}</p>
+            <p className="text-accent-content">{b.desc}</p>
           </div>
         ))}
       </div>

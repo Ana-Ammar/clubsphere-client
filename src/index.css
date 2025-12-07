@@ -40,3 +40,7 @@ a.active {
 section {
   @apply max-w-6xl mx-auto px-4
 }
+
+.input-field {
+  @apply input bg-white border border-[#d9dceb] text-[#2e3147] rounded-lg py-2 px-4 w-full focus:outline-none focus:ring-2 focus:ring-[#8e94f2]
+}

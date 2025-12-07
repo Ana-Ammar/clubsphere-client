@@ -26,7 +26,7 @@ const Profile = () => {
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
         </div>
          </div>
-         :  <Link><Button name={`Login`}/></Link>
+         :  <Link to="/login"><Button name={`Login`}/></Link>
          }
         </label>
       </div>
