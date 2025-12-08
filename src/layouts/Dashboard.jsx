@@ -13,7 +13,7 @@ const Dashboard = () => {
             <span className="glass rounded-4xl py-2 px-4">ClubSphere</span>
           </h1>
 
-          <div className="flex justify-center items-center gap-2 glass rounded-4xl py-2 px-4">
+          <div className="md:flex justify-center items-center gap-2 glass rounded-4xl py-2 px-4">
             <div className="text-right text-sm">
               <h4>{user?.displayName}</h4>
               <p className="text-black/70">{user?.email}</p>
