@@ -1,26 +1,30 @@
-import {
-  FaMapMarkerAlt,
-  FaDollarSign,
-  FaUserTie,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaMapMarkerAlt, FaDollarSign, FaUserTie } from "react-icons/fa";
 import Button from "../../../components/button/Button";
+import BackButton from "../../../components/back_button/BackButton";
+import { useNavigate, useParams } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ClubDetails = () => {
-  const club = {
-    _id: "1",
-    clubName: "Photography Enthusiasts",
-    description:
-      "A club for people passionate about photography. We organize workshops, photo walks, and exhibitions to help members improve their skills and connect with fellow photographers.",
-    category: "Photography",
-    location: "Dhaka, Bangladesh",
-    bannerImage: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde",
-    membershipFee: 500,
-    managerEmail: "manager@photoclub.com",
-    status: "approved",
-  };
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
 
-    window.scrollTo({
+  const { data: club = {} } = useQuery({
+    queryKey: ["club"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/clubs/${id}`);
+      return res.data;
+    },
+  });
+
+  // const { mutate } = useMutation({
+  //   mutationFn: async (payload) => {
+  //     await axiosSecure.post("/memberships", payload)
+  //   },
+  // });
+
+  window.scrollTo({
     top: 0,
     left: 0,
     behavior: "smooth",
@@ -29,13 +33,13 @@ const ClubDetails = () => {
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-8">
       {/* Back Button */}
-      <button
-        className="btn btn-sm mb-4 flex items-center gap-2"
-        onClick={() => window.history.back()}
-      >
-        <FaArrowLeft />
-        Back
-      </button>
+      <BackButton
+        name="Back"
+        color="black"
+        handleBtn={() => {
+          navigate(-1);
+        }}
+      />
 
       {/* Banner */}
       <div className="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg">

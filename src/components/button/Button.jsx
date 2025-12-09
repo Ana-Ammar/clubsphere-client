@@ -1,4 +1,4 @@
-const Button = ({ name, handleBtn }) => {
+const Button = ({ name, handleBtn, icon: Icon }) => {
   return (
     <button
     onClick={handleBtn}
@@ -32,7 +32,7 @@ const Button = ({ name, handleBtn }) => {
           />
         </svg>
       </span>
-      <span className="relative font-medium">{name}</span>
+      <span className="relative font-medium flex items-center justify-center gap-1">{Icon && <Icon />} {name}</span>
     </button>
   );
 };

@@ -5,6 +5,7 @@ import { Link } from "react-router";
 
 const EventCard = ({ event }) => {
   const [showInfo, setShowInfo] = useState(false);
+  console.log(event)
 
   return (
     <div
@@ -15,7 +16,7 @@ const EventCard = ({ event }) => {
     >
       {/* Background Image */}
       <img
-        src="https://www.bbcclub.com/wp-content/uploads/2022/03/bbcclub-connect-photography-02.jpg"
+        src={event.image || "https://www.bbcclub.com/wp-content/uploads/2022/03/bbcclub-connect-photography-02.jpg"}
         alt={event.title}
         className={`w-full h-full object-cover transition-transform duration-500 ${showInfo ? "scale-110" : "group-hover:scale-110"}`}
       />
@@ -47,7 +48,7 @@ const EventCard = ({ event }) => {
           </div>
 
           {/* Details Button */}
-        <Link > <Button>Hello</Button></Link>
+        <Link to={`/event-details/${event._id}`}><Button icon={FaInfoCircle} name="View Details"/></Link>
         </div>
       </div>
     </div>

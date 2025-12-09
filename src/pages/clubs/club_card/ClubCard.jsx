@@ -57,7 +57,7 @@ const ClubCard = ({ club }) => {
 
       {/* Footer */}
       <div className="px-6 pb-4">
-       <Link to={`/club-details/${club._id}`}><Button name="View Details"></Button></Link>
+       <Link to={`/club-details/${club._id}`}><Button name="View Details" icon={FaInfoCircle}></Button></Link>
       </div>
     </div>
     );

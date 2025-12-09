@@ -1,34 +1,17 @@
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import ClubCard from "./club_card/ClubCard";
-
-// Example fake data (replace with API fetch later)
-const clubs = [
-  {
-    _id: "1",
-    clubName: "Photography Club",
-    category: "Photography",
-    location: "Banani, Dhaka",
-    membershipFee: 0,
-    status: "approved",
-  },
-  {
-    _id: "2",
-    clubName: "Tech Innovators",
-    category: "Tech",
-    location: "Uttara, Dhaka",
-    membershipFee: 500,
-    status: "pending",
-  },
-  {
-    _id: "3",
-    clubName: "Sports Mania",
-    category: "Sports",
-    location: "Gulshan, Dhaka",
-    membershipFee: 300,
-    status: "approved",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
 
 const Clubs = () => {
+  const axiosSecure = useAxiosSecure();
+  const { data: clubs = [] } = useQuery({
+    queryKey: ["clubs"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/clubs");
+      return res.data;
+    },
+  });
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <div className="py-12 px-4 sm:px-6 lg:px-12">
