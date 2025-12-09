@@ -7,6 +7,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/login/Login";
 import SignUp from "../pages/auth/sign_up/SignUp";
 import Dashboard from "../layouts/Dashboard";
+import SecendoryLayout from "../layouts/SecendoryLayout";
+import ClubDetails from "../pages/clubs/club_details/ClubDetails";
 
 export const router = createBrowserRouter([
     {
@@ -16,10 +18,20 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />
-            },
+            }
+        ]
+    },
+    {
+        path:"/",
+        element : <SecendoryLayout />,
+        children: [
             {
                path: "/clubs",
                element: <Clubs /> 
+            },
+            {
+                path: "/club-details/:id",
+                element: <ClubDetails />
             },
             {
                 path: "/events",

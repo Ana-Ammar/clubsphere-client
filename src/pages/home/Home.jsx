@@ -4,7 +4,7 @@ import WhyJoin from "./why_join/WhyJoin";
 
 const Home = () => {
     return (
-        <div>
+        <div className="overflow-x-hidden">
             <Banner />
             <HowItWorks />
             <WhyJoin />

@@ -50,7 +50,7 @@ const Banner = () => {
             >
               {/* Overlay */}
               <div className="absolute inset-0 bg-white/20 backdrop-blur-xs flex items-center px-6">
-                <div className="mx-auto flex flex-col items-center bg-white/20 p-6 rounded-2xl">
+                <div className="mx-auto flex flex-col items-center bg-white/20 p-6 rounded-2xl mt-10 md:mt-0">
                   <h2 className="text-4xl font-bold text-gray-900 mb-3">
                     {slide.title}
                   </h2>
