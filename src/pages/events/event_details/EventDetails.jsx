@@ -1,32 +1,89 @@
 import {
-  FaArrowLeft,
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaDollarSign,
   FaUsers,
 } from "react-icons/fa";
 import Button from "../../../components/button/Button";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import BackButton from "../../../components/back_button/BackButton";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const EventDetails = () => {
   const navigate = useNavigate();
-  const event = {
-    _id: "evt123",
-    clubId: "club456",
-    title: "Sunset Photography Walk",
-    description:
-      "Join us for a relaxing evening photography walk along the riverbanks. Suitable for beginners and pros alike. Bring your camera and capture the beauty of the sunset with fellow photography enthusiasts.",
-    eventDate: "2025-12-15T16:00:00Z",
-    location: "Banani, Dhaka, Bangladesh",
-    isPaid: true,
-    eventFee: 300,
-    maxAttendees: 20,
-    image:
-      "https://www.bbcclub.com/wp-content/uploads/2022/03/bbcclub-connect-photography-02.jpg",
-    createdAt: "2025-11-01T10:00:00Z",
-  };
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
 
+  const { data: event = {} } = useQuery({
+    queryKey: ["event", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/events/${id}`);
+      return res.data[0];
+    },
+  });
+
+  const { data: checkRegistration = [] } = useQuery({
+    queryKey: ["checkRegistration", id, user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/eventRegistrations?eventId=${id}&userEmail=${user.email}`
+      );
+      return res.data;
+    },
+  });
+
+  const isRegister = checkRegistration.length > 0 ? true : false;
+
+  const { mutate } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axiosSecure.post("/eventRegistrations", payload);
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["checkRegistration", id, user.email]);
+      Swal.fire({
+        title: "Success!",
+        text: "Event Registration Successfull",
+        icon: "success",
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: `${error.message}`,
+      });
+    },
+  });
+
+  const handleRegBtn = () => {
+    const regInfo = {
+      userEmail: user.email,
+      clubId: event.clubId,
+      eventId: event._id,
+    };
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to register on ${event.title}? event`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Add it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutate(regInfo);
+      }
+    });
+  };
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton
@@ -40,8 +97,8 @@ const EventDetails = () => {
       {/* Event Image */}
       <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-lg mb-6">
         <img
-          src={event.image || "https://via.placeholder.com/800x400"}
-          alt={event.title}
+          src={event?.image}
+          alt={event?.title}
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-4 left-4 bg-black/60 text-white px-4 py-2 rounded-lg text-2xl font-bold">
@@ -83,7 +140,13 @@ const EventDetails = () => {
 
         {/* Join Button */}
         <div className="mt-4">
-          <Button name="Join Now" onClick={() => console.log("Join clicked")} />
+          <Button
+            handleBtn={handleRegBtn}
+            disabled={isRegister ? true : false}
+            name={`${
+              isRegister ? "You have already regestered" : "Register Now"
+            }`}
+          ></Button>
         </div>
       </div>
     </div>

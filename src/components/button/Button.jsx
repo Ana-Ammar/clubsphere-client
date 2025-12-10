@@ -1,8 +1,11 @@
-const Button = ({ name, handleBtn, icon: Icon }) => {
+const Button = ({ name, handleBtn, icon: Icon, className, disabled }) => {
   return (
     <button
-    onClick={handleBtn}
-     className="cursor-pointer relative inline-flex items-center justify-center px-5 py-2 overflow-hidden tracking-tighter text-white bg-primary rounded-lg group transition-all duration-200  active:scale-95 w-full">
+  
+      onClick={handleBtn}
+      disabled={disabled}
+      className={`${className} cursor-pointer relative inline-flex items-center justify-center px-5 py-2 overflow-hidden tracking-tighter text-white bg-primary rounded-lg group transition-all duration-200  active:scale-95 w-full`}
+    >
       <span className="absolute w-0 h-0 transition-all duration-200 ease-out bg-gray-600 rounded-full group-hover:w-full group-hover:h-56" />
       <span className="absolute bottom-0 left-0 h-full -ml-2">
         <svg
@@ -32,7 +35,9 @@ const Button = ({ name, handleBtn, icon: Icon }) => {
           />
         </svg>
       </span>
-      <span className="relative font-medium flex items-center justify-center gap-1">{Icon && <Icon />} {name}</span>
+      <span className="relative font-medium flex items-center justify-center gap-1">
+        {Icon && <Icon />} {name}
+      </span>
     </button>
   );
 };

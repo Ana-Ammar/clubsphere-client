@@ -3,26 +3,82 @@ import Button from "../../../components/button/Button";
 import BackButton from "../../../components/back_button/BackButton";
 import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const ClubDetails = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const { data: club = {} } = useQuery({
-    queryKey: ["club"],
+    queryKey: ["club", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/clubs/${id}`);
       return res.data;
     },
   });
 
-  // const { mutate } = useMutation({
-  //   mutationFn: async (payload) => {
-  //     await axiosSecure.post("/memberships", payload)
-  //   },
-  // });
+  const { data: checkMembership = {} } = useQuery({
+    queryKey: ["checkMembership", id, user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/memberships?clubId=${id}&userEmail=${user.email}`
+      );
+      return res.data;
+    },
+  });
+
+  const isMember = checkMembership.length > 0 ? true : false;
+
+  const { mutate } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axiosSecure.post("/memberships", payload);
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["checkMembership", id, user.email]);
+
+      Swal.fire({
+        title: "Success!",
+        text: "Membership added successfully.",
+        icon: "success",
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: `${error.message}`,
+      });
+    },
+  });
+
+  const handleJoinBtn = () => {
+    const joinInfo = {
+      userEmail: user.email,
+      clubId: club._id,
+    };
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to join to ${club.clubName}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Add it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutate(joinInfo);
+      }
+    });
+  };
 
   window.scrollTo({
     top: 0,
@@ -97,7 +153,11 @@ const ClubDetails = () => {
       </div>
 
       <div className="my-6">
-        <Button name="Join Now"></Button>
+        <Button
+          handleBtn={handleJoinBtn}
+          disabled={isMember ? true : false}
+          name={`${isMember ? "You are already Member" : "Join Now"}`}
+        ></Button>
       </div>
 
       {/* Optional Extra Sections */}
