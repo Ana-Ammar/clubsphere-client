@@ -155,7 +155,11 @@ const ClubDetails = () => {
       <div className="my-6">
         <Button
           handleBtn={handleJoinBtn}
-          disabled={isMember ? true : false}
+          disabled={
+            checkMembership.length > 0 || club.managerEmail === user.email
+              ? true
+              : false
+          }
           name={`${isMember ? "You are already Member" : "Join Now"}`}
         ></Button>
       </div>

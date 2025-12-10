@@ -3,8 +3,11 @@ import { FiEye, FiEdit, FiPlus } from "react-icons/fi";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import { useState } from "react";
+import EditClub from "./edit_club/EditClub";
 
 const MyClubs = () => {
+    const [isOpen, setIsOpen] = useState()
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -60,6 +63,7 @@ const MyClubs = () => {
             )}
 
             {clubs.map((club, index) => (
+                
               <tr key={club._id} className="hover">
                 <td>{index + 1}</td>
                 <td className="font-medium">{club.clubName}</td>
@@ -69,19 +73,25 @@ const MyClubs = () => {
                 <td className="flex items-center gap-3 justify-center">
                   {/* View Button */}
                   <button className="btn btn-sm btn-info text-white flex items-center gap-1">
-                    <FiEye size={16} /> View
+               <EditClub club={club} setIsOpen={setIsOpen} isOpen={isOpen}/>
+                    <FiEye size={16} /> View 
                   </button>
 
                   {/* Edit Button */}
-                  <button className="btn btn-sm btn-warning text-white flex items-center gap-1">
+                  <button
+                  onClick={() => setIsOpen(true)}
+                   className="btn btn-sm btn-warning text-white flex items-center gap-1">
                     <FiEdit size={16} /> Edit
                   </button>
                 </td>
               </tr>
+
             ))}
           </tbody>
         </table>
       </div>
+
+      
     </div>
   );
 };

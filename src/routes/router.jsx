@@ -16,6 +16,7 @@ import ManageClubs from "../pages/dashboard/admin_pages/manage_clubs/ManageClubs
 import ManagerOverview from "../pages/dashboard/club_manager_pages/manager_overview/ManagerOverview";
 import MyClubs from "../pages/dashboard/club_manager_pages/my_clubs/MyClubs";
 import AddClub from "../pages/dashboard/club_manager_pages/my_clubs/add_club/AddClub";
+import ClubMembers from "../pages/dashboard/club_manager_pages/club_members/ClubMembers";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
         path: "add-club",
         element: <AddClub />,
       },
+      {
+        path: "club-members",
+        element: <ClubMembers />
+      }
     ],
   },
 ]);
