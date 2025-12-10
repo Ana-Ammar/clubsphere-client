@@ -1,5 +1,8 @@
+import { Link, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { PiDotsThreeCircleVerticalLight } from "react-icons/pi";
+import { LiaUsersCogSolid } from "react-icons/lia";
+import { MdManageHistory } from "react-icons/md";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -23,7 +26,9 @@ const Dashboard = () => {
         </nav>
 
         {/* Page content here */}
-        <div className="p-4">Page Content</div>
+        <div className="p-4">
+        <Outlet />
+        </div>
       </div>
 
       <div className="drawer-side is-drawer-close:overflow-visible">
@@ -43,7 +48,8 @@ const Dashboard = () => {
           <ul className="menu w-full grow">
 
             <li>
-              <button
+              <Link
+              to="admin-overview"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
@@ -62,8 +68,29 @@ const Dashboard = () => {
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span className="is-drawer-close:hidden">Homepage</span>
-              </button>
+              </Link>
             </li>
+
+            <li>
+              <Link
+              to="manage-users"
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Users">
+                <LiaUsersCogSolid  size={24}/>
+                <span className="is-drawer-close:hidden">Manage Users</span>
+              </Link>
+            </li>
+
+             <li>
+              <Link
+              to="manage-clubs"
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Clubs">
+               <MdManageHistory size={24} />
+                <span className="is-drawer-close:hidden">Manage Clubs</span>
+              </Link>
+            </li>
+
 
           </ul>
           <div className="w-10/12 mx-auto my-4"></div>

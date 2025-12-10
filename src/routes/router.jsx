@@ -10,6 +10,9 @@ import Dashboard from "../layouts/Dashboard";
 import SecendoryLayout from "../layouts/SecendoryLayout";
 import ClubDetails from "../pages/clubs/club_details/ClubDetails";
 import EventDetails from "../pages/events/event_details/EventDetails";
+import AdminOverview from "../pages/dashboard/admin_pages/admin_overview/AdminOverview";
+import ManageUsers from "../pages/dashboard/admin_pages/manage_users/ManageUsers";
+import ManageClubs from "../pages/dashboard/admin_pages/manage_clubs/ManageClubs";
 
 export const router = createBrowserRouter([
   {
@@ -61,5 +64,19 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    children: [
+      {
+        path: "admin-overview",
+        element: <AdminOverview />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "manage-clubs",
+        element: <ManageClubs />
+      }
+    ],
   },
 ]);
