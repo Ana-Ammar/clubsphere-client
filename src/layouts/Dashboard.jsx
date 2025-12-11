@@ -27,7 +27,7 @@ const Dashboard = () => {
 
         {/* Page content here */}
         <div className="p-4">
-        <Outlet />
+          <Outlet />
         </div>
       </div>
 
@@ -46,10 +46,9 @@ const Dashboard = () => {
             <PiDotsThreeCircleVerticalLight size={32} />
           </label>
           <ul className="menu w-full grow">
-
             <li>
               <Link
-              to="admin-overview"
+                to="admin-overview"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
@@ -73,29 +72,30 @@ const Dashboard = () => {
 
             <li>
               <Link
-              to="manage-users"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Users">
-                <LiaUsersCogSolid  size={24}/>
+                to="manage-users"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Users"
+              >
+                <LiaUsersCogSolid size={24} />
                 <span className="is-drawer-close:hidden">Manage Users</span>
               </Link>
             </li>
 
-             <li>
+            <li>
               <Link
-              to="manage-clubs"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Clubs">
-               <MdManageHistory size={24} />
+                to="manage-clubs"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Clubs"
+              >
+                <MdManageHistory size={24} />
                 <span className="is-drawer-close:hidden">Manage Clubs</span>
               </Link>
             </li>
 
-
-          {/* Manager Pages */}
-           <li>
+            {/* Manager Pages */}
+            <li>
               <Link
-              to="manager-overview"
+                to="manager-overview"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Manager Overview"
               >
@@ -117,47 +117,103 @@ const Dashboard = () => {
               </Link>
             </li>
 
-
-             <li>
+            <li>
               <Link
-              to="manager-clubs"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Clubs">
-               <MdManageHistory size={24} />
+                to="manager-clubs"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Clubs"
+              >
+                <MdManageHistory size={24} />
                 <span className="is-drawer-close:hidden">My Clubs</span>
               </Link>
             </li>
 
-
-             <li>
+            <li>
               <Link
-              to="club-members"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Clubs">
-               <MdManageHistory size={24} />
+                to="club-members"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Clubs"
+              >
+                <MdManageHistory size={24} />
                 <span className="is-drawer-close:hidden">My Clubs</span>
               </Link>
             </li>
 
-              <li>
+            <li>
               <Link
-              to="event-management"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Club Events">
-               <MdManageHistory size={24} />
+                to="event-management"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Club Events"
+              >
+                <MdManageHistory size={24} />
                 <span className="is-drawer-close:hidden">My Club Events</span>
               </Link>
             </li>
 
             <li>
               <Link
-              to="event-registration"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Events Registrations">
-               <MdManageHistory size={24} />
-                <span className="is-drawer-close:hidden">My Events Registrations</span>
+                to="event-registration"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Events Registrations"
+              >
+                <MdManageHistory size={24} />
+                <span className="is-drawer-close:hidden">
+                  My Events Registrations
+                </span>
               </Link>
             </li>
+
+            {/* member Pages */}
+            <li>
+              <Link
+                to="member-overview"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Member Overview"
+              >
+                {/* Home icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  fill="none"
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                >
+                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span className="is-drawer-close:hidden">Manager Overview</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="my-clubs"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Clubs"
+              >
+                <MdManageHistory size={24} />
+                <span className="is-drawer-close:hidden">
+                  My Clubs
+                </span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="my-events"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Events"
+              >
+                <MdManageHistory size={24} />
+                <span className="is-drawer-close:hidden">
+                  My Events
+                </span>
+              </Link>
+            </li>
+
 
           </ul>
           <div className="w-10/12 mx-auto my-4"></div>
