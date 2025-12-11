@@ -138,6 +138,17 @@ const Dashboard = () => {
                 <span className="is-drawer-close:hidden">My Clubs</span>
               </Link>
             </li>
+
+              <li>
+              <Link
+              to="event-management"
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Club Events">
+               <MdManageHistory size={24} />
+                <span className="is-drawer-close:hidden">My Club Events</span>
+              </Link>
+            </li>
+
           </ul>
           <div className="w-10/12 mx-auto my-4"></div>
         </div>

@@ -1,7 +1,6 @@
 const Button = ({ name, handleBtn, icon: Icon, className, disabled }) => {
   return (
     <button
-  
       onClick={handleBtn}
       disabled={disabled}
       className={`${className} cursor-pointer relative inline-flex items-center justify-center px-5 py-2 overflow-hidden tracking-tighter text-white bg-primary rounded-lg group transition-all duration-200  active:scale-95 w-full`}

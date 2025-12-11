@@ -17,6 +17,8 @@ import ManagerOverview from "../pages/dashboard/club_manager_pages/manager_overv
 import MyClubs from "../pages/dashboard/club_manager_pages/my_clubs/MyClubs";
 import AddClub from "../pages/dashboard/club_manager_pages/my_clubs/add_club/AddClub";
 import ClubMembers from "../pages/dashboard/club_manager_pages/club_members/ClubMembers";
+import EventManagement from "../pages/dashboard/club_manager_pages/event_management/EventManagement";
+import AddEventForm from "../pages/dashboard/club_manager_pages/event_management/add_event_form/AddEventForm";
 
 export const router = createBrowserRouter([
   {
@@ -95,7 +97,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "club-members",
-        element: <ClubMembers />
+        element: <ClubMembers />,
+      },
+      {
+        path: "event-management",
+        element: <EventManagement />,
+      },
+      {
+        path: "add-event-form/:id",
+        element: <AddEventForm />
       }
     ],
   },

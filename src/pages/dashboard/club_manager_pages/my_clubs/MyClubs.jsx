@@ -7,7 +7,7 @@ import { useState } from "react";
 import EditClub from "./edit_club/EditClub";
 
 const MyClubs = () => {
-    const [isOpen, setIsOpen] = useState()
+  const [isOpen, setIsOpen] = useState();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -30,12 +30,13 @@ const MyClubs = () => {
     <div className="p-5">
       {/* Header */}
       <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-bold">My Clubs</h2>
+        <h2 className="text-3xl font-bold">My Clubs</h2>
 
         {/* Add Club Button */}
         <Link
-        to="/dashboard/add-club"
-         className="btn btn-primary flex items-center gap-2">
+          to="/dashboard/add-club"
+          className="btn btn-primary flex items-center gap-2"
+        >
           <FiPlus /> Add Club
         </Link>
       </div>
@@ -63,7 +64,6 @@ const MyClubs = () => {
             )}
 
             {clubs.map((club, index) => (
-                
               <tr key={club._id} className="hover">
                 <td>{index + 1}</td>
                 <td className="font-medium">{club.clubName}</td>
@@ -73,25 +73,27 @@ const MyClubs = () => {
                 <td className="flex items-center gap-3 justify-center">
                   {/* View Button */}
                   <button className="btn btn-sm btn-info text-white flex items-center gap-1">
-               <EditClub club={club} setIsOpen={setIsOpen} isOpen={isOpen}/>
-                    <FiEye size={16} /> View 
+                    <EditClub
+                      club={club}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                    />
+                    <FiEye size={16} /> View f
                   </button>
 
                   {/* Edit Button */}
                   <button
-                  onClick={() => setIsOpen(true)}
-                   className="btn btn-sm btn-warning text-white flex items-center gap-1">
+                    onClick={() => setIsOpen(true)}
+                    className="btn btn-sm btn-warning text-white flex items-center gap-1"
+                  >
                     <FiEdit size={16} /> Edit
                   </button>
                 </td>
               </tr>
-
             ))}
           </tbody>
         </table>
       </div>
-
-      
     </div>
   );
 };

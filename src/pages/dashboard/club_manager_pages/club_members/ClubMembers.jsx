@@ -9,7 +9,7 @@ const ClubMembers = () => {
   const { user } = useAuth();
   const managerEmail = user?.email;
   const axiosSecure = useAxiosSecure();
-//   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const [selectedClubId, setSelectedClubId] = useState(null);
 
   // Fetch all clubs managed by this manager
@@ -21,7 +21,6 @@ const ClubMembers = () => {
     },
   });
 
-
   // Fetch members for selected club
   const { data: members = [], isLoading: loadingMembers } = useQuery({
     queryKey: ["members", selectedClubId],
@@ -32,50 +31,50 @@ const ClubMembers = () => {
       );
       return res.data;
     },
-    enabled: !!selectedClubId, // only fetch when club selected
+    enabled: !!selectedClubId,
   });
-  console.log(members)
 
   // Mutation to set membership expired
-//   const expireMutation = useMutation({
-//     mutationFn: async (membershipId) => {
-//       const res = await axiosSecure.patch(
-//         `/memberships/${membershipId}/expire`
-//       );
-//       return res.data;
-//     },
-//     onSuccess: () => {
-//       queryClient.invalidateQueries(["members", selectedClubId]);
-//       Swal.fire({
-//         icon: "success",
-//         title: "Membership Expired",
-//         text: "The membership has been set to expired.",
-//         timer: 1500,
-//       });
-//     },
-//     onError: (error) => {
-//       Swal.fire({
-//         icon: "error",
-//         title: "Error",
-//         text: error.message,
-//       });
-//     },
-//   });
+  const expireMutation = useMutation({
+    mutationFn: async ({ membershipId, status }) => {
+      const res = await axiosSecure.patch(
+        `/memberships/${membershipId}/status`,
+        { status }
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["members", selectedClubId]);
+      Swal.fire({
+        icon: "success",
+        title: "Membership Expired",
+        text: "The membership has been set to expired.",
+        timer: 1500,
+      });
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    },
+  });
 
-//   const handleSetExpired = (membershipId) => {
-//     Swal.fire({
-//       title: "Are you sure?",
-//       text: "Do you want to expire this membership?",
-//       icon: "warning",
-//       showCancelButton: true,
-//       confirmButtonText: "Yes, expire it!",
-//       cancelButtonText: "Cancel",
-//     }).then((result) => {
-//       if (result.isConfirmed) {
-//         expireMutation.mutate(membershipId);
-//       }
-//     });
-//   };
+  const handleSetExpired = (membershipId, status) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to expire this membership?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, expire it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        expireMutation.mutate({ membershipId, status });
+      }
+    });
+  };
 
   if (loadingClubs) return <p>Loading clubs...</p>;
 
@@ -109,7 +108,6 @@ const ClubMembers = () => {
             <thead className="bg-base-200">
               <tr>
                 <th>#</th>
-                <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
                 <th>Join Date</th>
@@ -120,7 +118,6 @@ const ClubMembers = () => {
               {members.map((m, idx) => (
                 <tr key={m._id} className="hover">
                   <th>{idx + 1}</th>
-                  <td>{m.userName}</td>
                   <td>{m.userEmail}</td>
                   <td>
                     <span
@@ -132,15 +129,15 @@ const ClubMembers = () => {
                     </span>
                   </td>
                   <td>
-                    {m.joinDate
-                      ? new Date(m.joinDate).toLocaleDateString()
+                    {m.joinedAt
+                      ? new Date(m.joinedAt).toLocaleDateString()
                       : "—"}
                   </td>
                   <td className="space-x-2 flex">
                     {m.status === "active" && (
                       <button
                         className="btn btn-xs btn-warning flex items-center gap-1"
-                        onClick={() => handleSetExpired(m._id)}
+                        onClick={() => handleSetExpired(m._id, "expired")}
                       >
                         <FiUserX /> Expire
                       </button>
