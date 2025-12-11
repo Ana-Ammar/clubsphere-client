@@ -25,7 +25,7 @@ const EventManagement = () => {
   });
 
   // Fetch events based on selected club
-  const { data: events = [], isLoading } = useQuery({
+  const { data: events = [] } = useQuery({
     queryKey: ["events", selectedClub],
     queryFn: async () => {
       if (!selectedClub) return [];
@@ -62,9 +62,6 @@ const EventManagement = () => {
     });
   };
 
-  if (!clubs?.length) {
-    return <p className="text-center py-10">No clubs found.</p>;
-  }
 
   return (
     <div className="p-6 space-y-6">
@@ -95,11 +92,7 @@ const EventManagement = () => {
         )}
       </div>
       {/* Events Table */}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : events.length === 0 ? (
-        <p>No events available for this club.</p>
-      ) : (
+  
         <div className="overflow-x-auto rounded-xl shadow">
           <table className="table table-zebra w-full">
             <thead className="bg-base-200 text-base">
@@ -152,7 +145,7 @@ const EventManagement = () => {
             </tbody>
           </table>
         </div>
-      )}
+   
     </div>
   );
 };
