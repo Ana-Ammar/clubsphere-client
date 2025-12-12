@@ -8,7 +8,7 @@ const BackButton = ({name, link, color, handleBtn}) => {
         to={link}
         className={`border ${color === 'black' ? "border-black text-black hover:border-0" : "border-base-100 text-base-100"}  rounded-full py-2 ${name !== 'Back' ? "px-6" : "px-4"} text-xs font-bold cursor-pointer hover:bg-white ${name === "Back"? "hover:text-accent" : "hover:text-primary" } transition-all flex items-center gap-2 w-fit mb-4`}
       >
-      {name === 'Back' && <IoMdArrowRoundBack />}  {name}
+      {name === 'Back' || name === "Back to Home" && <IoMdArrowRoundBack />}  {name}
       </Link>
     );
 };

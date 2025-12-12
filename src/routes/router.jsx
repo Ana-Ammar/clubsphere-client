@@ -23,6 +23,7 @@ import EventRegistrations from "../pages/dashboard/club_manager_pages/event_regi
 import MemberOverview from "../pages/dashboard/user_pages/member_overview/MemberOverview";
 import MyClub from "../pages/dashboard/user_pages/my_clubs/MyClubs";
 import MyEvents from "../pages/dashboard/user_pages/my_events/MyEvents";
+import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ export const router = createBrowserRouter([
       {
         path: "my-events",
         element: <MyEvents />
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess />
       }
     ],
   },

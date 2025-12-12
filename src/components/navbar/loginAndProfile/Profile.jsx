@@ -2,16 +2,12 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import Button from "../../button/Button";
 import { Link } from "react-router";
+import useRole from "../../../hooks/useRole";
 
 const Profile = () => {
   const { user, logOut } = useAuth();
-  const links = (
-    <>
-      <li>
-        <Link to="/dashboard">Dashboard</Link>
-      </li>
-    </>
-  );
+  const { role } = useRole();
+  console.log()
 
   const handleLogOut = () => {
     logOut()
@@ -71,7 +67,19 @@ const Profile = () => {
             document.getElementById("my-drawer-5").checked = false;
           }}
         >
-          {links}
+          {role.role === "member" && (
+            <>
+              <li>
+                <Link to="/dashboard/member-overview">Overview</Link>{" "}
+              </li>
+              <li>
+                <Link to="/dashboard/my-clubs">My Clubs</Link>{" "}
+              </li>
+              <li>
+                <Link to="/dashboard/my-events">My Events</Link>{" "}
+              </li>
+            </>
+          )}
           <Button handleBtn={handleLogOut} name="Log Out"></Button>
         </ul>
       </div>

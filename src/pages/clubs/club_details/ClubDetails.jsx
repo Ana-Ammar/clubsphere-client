@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const ClubDetails = () => {
   const navigate = useNavigate();
@@ -22,11 +23,12 @@ const ClubDetails = () => {
     },
   });
 
-  const { data: checkMembership = {} } = useQuery({
-    queryKey: ["checkMembership", id, user.email],
+  const { data: checkMembership = [] } = useQuery({
+    queryKey: ["checkMembership", id, user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/memberships?clubId=${id}&userEmail=${user.email}`
+        `/memberships?clubId=${id}&userEmail=${user?.email}`
       );
       return res.data;
     },
@@ -59,32 +61,49 @@ const ClubDetails = () => {
     },
   });
 
-  const handleJoinBtn = () => {
-    const joinInfo = {
-      userEmail: user.email,
-      clubId: club._id,
-    };
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: `Do you want to join to ${club.clubName}?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Add it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        mutate(joinInfo);
-      }
-    });
+  const handleJoinBtn = async () => {
+  const joinInfo = {
+    userEmail: user.email,
+    clubId: club._id,
   };
 
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: "smooth",
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: `Do you want to join ${club.clubName}?`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, Join!",
   });
+
+  if (!result.isConfirmed) return;
+
+
+  if (club.membershipFee > 0) {
+    const paymentInfo = {
+      membershipFee: club.membershipFee,
+      userEmail: user?.email,
+      clubId: club._id,
+      clubName: club.clubName,
+    };
+    const res = await axiosSecure.post(
+      "/payment-checkout-session",
+      paymentInfo
+    );
+
+    if (res.data?.url) {
+      window.location.href = res.data.url; 
+      return; 
+    }
+  }
+  mutate(joinInfo);
+};
+
+
+useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, []);
 
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-8">
@@ -156,7 +175,7 @@ const ClubDetails = () => {
         <Button
           handleBtn={handleJoinBtn}
           disabled={
-            checkMembership.length > 0 || club.managerEmail === user.email
+            checkMembership?.length > 0 || club?.managerEmail === user?.email
               ? true
               : false
           }

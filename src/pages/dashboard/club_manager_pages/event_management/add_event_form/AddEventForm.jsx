@@ -5,6 +5,7 @@ import {
   FiDollarSign,
   FiUsers,
   FiImage,
+  FiCalendar,
 } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router";
 import BackButton from "../../../../../components/back_button/BackButton";
@@ -110,6 +111,26 @@ const AddEventForm = () => {
             </p>
           )}
         </div>
+
+        {/* Location */}
+        <div>
+          <label className="block mb-1 font-medium">Event Date</label>
+          <div className="flex gap-2 items-center">
+            <FiCalendar />
+            <input
+              type="date"
+              {...register("date", { required: "Date is required" })}
+              className="input-field"
+              placeholder="Event Date"
+            />
+          </div>
+          {errors.date && (
+            <p className="text-sm text-red-500 mt-1">
+              {errors.date.message}
+            </p>
+          )}
+        </div>
+
 
         {/* isPaid toggle */}
         <div className="flex items-center gap-3">
