@@ -1,13 +1,13 @@
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxios from "../../hooks/useAxios";
 import ClubCard from "./club_card/ClubCard";
 import { useQuery } from "@tanstack/react-query";
 
 const Clubs = () => {
-  const axiosSecure = useAxiosSecure();
+  const axios = useAxios();
   const { data: clubs = [] } = useQuery({
     queryKey: ["clubs"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/clubs");
+      const res = await axios.get("/clubs");
       return res.data;
     },
   });

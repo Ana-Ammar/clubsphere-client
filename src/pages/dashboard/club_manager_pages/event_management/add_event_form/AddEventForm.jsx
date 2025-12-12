@@ -1,4 +1,4 @@
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   FiSave,
   FiMapPin,
@@ -20,16 +20,9 @@ const AddEventForm = () => {
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors },
   } = useForm();
-
-  const isPaid = useWatch({
-    control,
-    name: "isPaid",
-    defaultValue: false,
-  });
 
   const submitHandler = async (data) => {
     const payload = {
@@ -125,50 +118,22 @@ const AddEventForm = () => {
             />
           </div>
           {errors.date && (
-            <p className="text-sm text-red-500 mt-1">
-              {errors.date.message}
-            </p>
+            <p className="text-sm text-red-500 mt-1">{errors.date.message}</p>
           )}
         </div>
 
-
-        {/* isPaid toggle */}
-        <div className="flex items-center gap-3">
-          <input
-            id="isPaid"
-            type="checkbox"
-            {...register("isPaid")}
-            className="mr-2"
-          />
-          <label htmlFor="isPaid" className="font-medium">
-            Is Paid Event?
-          </label>
-        </div>
-
-        {/* Event Fee (only when isPaid) */}
-        {isPaid && (
-          <div>
-            <label className="block mb-1 font-medium">Event Fee</label>
-            <div className="flex gap-2 items-center">
-              <FiDollarSign />
-              <input
-                type="number"
-                step="0.01"
-                {...register("eventFee", {
-                  required: isPaid ? "Fee is required for paid events" : false,
-                  min: { value: 0, message: "Fee cannot be negative" },
-                })}
-                className="input-field"
-                placeholder="e.g., 200"
-              />
-            </div>
-            {errors.eventFee && (
-              <p className="text-sm text-red-500 mt-1">
-                {errors.eventFee.message}
-              </p>
-            )}
+        <div>
+          <label className="font-semibold">Event Image URL</label>
+          <div className="flex items-center gap-2">
+            <FiUpload size={20} className="text-primary" />
+            <input
+              type="text"
+              {...register("eventImage", { required: true })}
+              className="input-field w-full"
+              placeholder="Paste image link here"
+            />
           </div>
-        )}
+        </div>
 
         {/* Max Attendees */}
         <div>

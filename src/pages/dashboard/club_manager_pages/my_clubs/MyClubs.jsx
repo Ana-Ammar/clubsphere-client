@@ -72,20 +72,21 @@ const MyClubs = () => {
 
                 <td className="flex items-center gap-3 justify-center">
                   {/* View Button */}
-                  <button className="btn btn-sm btn-info text-white flex items-center gap-1">
-                    <EditClub
-                      club={club}
-                      setIsOpen={setIsOpen}
-                      isOpen={isOpen}
-                    />
-                    <FiEye size={16} /> View f
-                  </button>
+                  <Link to={`/club-details/${club._id}`} className="btn btn-sm btn-info text-white flex items-center gap-1">
+                   
+                    <FiEye size={16} /> View
+                  </Link>
 
                   {/* Edit Button */}
                   <button
                     onClick={() => setIsOpen(true)}
                     className="btn btn-sm btn-warning text-white flex items-center gap-1"
                   >
+                   <EditClub
+                      club={club}
+                      setIsOpen={setIsOpen}
+                      isOpen={isOpen}
+                    />
                     <FiEdit size={16} /> Edit
                   </button>
                 </td>

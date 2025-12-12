@@ -24,6 +24,10 @@ import MemberOverview from "../pages/dashboard/user_pages/member_overview/Member
 import MyClub from "../pages/dashboard/user_pages/my_clubs/MyClubs";
 import MyEvents from "../pages/dashboard/user_pages/my_events/MyEvents";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import ManagerRoute from "./ManagerRoute";
+import MemberRoute from "./MemberRoute";
 
 export const router = createBrowserRouter([
   {
@@ -46,7 +50,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/club-details/:id",
-        element: <ClubDetails />,
+        element: (
+          <PrivateRoute>
+            <ClubDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/events",
@@ -54,7 +62,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/event-details/:id",
-        element: <EventDetails />,
+        element: (
+          <PrivateRoute>
+            <EventDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -78,60 +90,116 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "admin-overview",
-        element: <AdminOverview />,
+        element: (
+          <AdminRoute>
+            <AdminOverview />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-clubs",
-        element: <ManageClubs />,
+        element: (
+          <AdminRoute>
+            <ManageClubs />
+          </AdminRoute>
+        ),
       },
       {
         path: "manager-overview",
-        element: <ManagerOverview />,
+        element: (
+          <ManagerRoute>
+            <ManagerOverview />
+          </ManagerRoute>
+        ),
       },
       {
         path: "manager-clubs",
-        element: <MyClubs />,
+        element: (
+          <ManagerRoute>
+            <MyClubs />
+          </ManagerRoute>
+        ),
       },
       {
         path: "add-club",
-        element: <AddClub />,
+        element: (
+          <ManagerRoute>
+            <AddClub />
+          </ManagerRoute>
+        ),
       },
       {
         path: "club-members",
-        element: <ClubMembers />,
+        element: (
+          <ManagerRoute>
+            <ClubMembers />
+          </ManagerRoute>
+        ),
       },
       {
         path: "event-management",
-        element: <EventManagement />,
+        element: (
+          <ManagerRoute>
+            <EventManagement />
+          </ManagerRoute>
+        ),
       },
       {
         path: "add-event-form/:id",
-        element: <AddEventForm />
+        element: (
+          <ManagerRoute>
+            <AddEventForm />
+          </ManagerRoute>
+        ),
       },
       {
         path: "event-registration",
-        element: <EventRegistrations />
+        element: (
+          <ManagerRoute>
+            <EventRegistrations />
+          </ManagerRoute>
+        ),
       },
       {
         path: "member-overview",
-        element: <MemberOverview />
+        element: (
+          <MemberRoute>
+            <MemberOverview />
+          </MemberRoute>
+        ),
       },
       {
         path: "my-clubs",
-        element: <MyClub />
+        element: (
+          <MemberRoute>
+            <MyClub />
+          </MemberRoute>
+        ),
       },
       {
         path: "my-events",
-        element: <MyEvents />
+        element: (
+          <MemberRoute>
+            <MyEvents />
+          </MemberRoute>
+        ),
       },
       {
         path: "payment-success",
-        element: <PaymentSuccess />
-      }
+        element: (
+          <MemberRoute>
+            <PaymentSuccess />
+          </MemberRoute>
+        ),
+      },
     ],
   },
 ]);

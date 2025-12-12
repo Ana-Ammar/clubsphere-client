@@ -42,6 +42,7 @@ const EventDetails = () => {
   const { mutate } = useMutation({
     mutationFn: async (payload) => {
       const res = await axiosSecure.post("/eventRegistrations", payload);
+      console.log(res.data)
       return res.data;
     },
 
@@ -97,7 +98,7 @@ const EventDetails = () => {
       {/* Event Image */}
       <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-lg mb-6">
         <img
-          src={event?.image}
+          src={event?.eventImage}
           alt={event?.title}
           className="w-full h-full object-cover"
         />
@@ -120,12 +121,7 @@ const EventDetails = () => {
           <span className="font-medium">{event.location}</span>
         </div>
 
-        <div className="flex items-center gap-3 text-gray-700">
-          <FaDollarSign className="text-gray-500" />
-          <span className="font-medium">
-            {event.isPaid ? `${event.eventFee} BDT` : "Free"}
-          </span>
-        </div>
+    
 
         {event.maxAttendees && (
           <div className="flex items-center gap-3 text-gray-700">

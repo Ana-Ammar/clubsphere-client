@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import EventCard from "./event_card/EventCard";
+import useAxios from "../../hooks/useAxios";
 
 const Events = () => {
-  const axiosSecure = useAxiosSecure();
+  const axios = useAxios();
   const { data: events = [] } = useQuery({
     queryKey: ["events"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/events");
+      const res = await axios.get("/events");
       return res.data;
     },
   });

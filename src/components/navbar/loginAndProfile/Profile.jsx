@@ -7,7 +7,7 @@ import useRole from "../../../hooks/useRole";
 const Profile = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
-  console.log()
+  console.log();
 
   const handleLogOut = () => {
     logOut()
@@ -80,6 +80,49 @@ const Profile = () => {
               </li>
             </>
           )}
+
+          {role.role === "clubManager" && (
+            <>
+              <li>
+                <Link to="/dashboard/manager-overview">Manager Overview</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/manager-clubs">My Clubs</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/club-members">Club Members</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/event-management">Event Management</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/event-registration">
+                  Events Registrations
+                </Link>
+              </li>
+            </>
+          )}
+
+          {role.role === "admin" && (
+            <>
+              <li>
+                <Link to="/dashboard/admin-overview">Admin Overview</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/manage-users">Manage Users</Link>
+              </li>
+
+              <li>
+                <Link to="/dashboard/manage-clubs">Manage Clubs</Link>
+              </li>
+            </>
+          )}
+
           <Button handleBtn={handleLogOut} name="Log Out"></Button>
         </ul>
       </div>
