@@ -183,24 +183,6 @@ useEffect(() => {
         ></Button>
       </div>
 
-      {/* Optional Extra Sections */}
-      <div className="mt-8 grid md:grid-cols-2 gap-6">
-        {/* Events */}
-        <div className="p-6 bg-gray-100 rounded-2xl">
-          <h3 className="text-lg font-semibold mb-2">Upcoming Events</h3>
-          <p className="text-accent-content text-sm">
-            Event integration available — connect your events API here.
-          </p>
-        </div>
-
-        {/* Members */}
-        <div className="p-6 bg-gray-100 rounded-2xl">
-          <h3 className="text-lg font-semibold mb-2">Members</h3>
-          <p className="text-accent-content text-sm">
-            Membership data can be shown here from /memberships API.
-          </p>
-        </div>
-      </div>
     </div>
   );
 };

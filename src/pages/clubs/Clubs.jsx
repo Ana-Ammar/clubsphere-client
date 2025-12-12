@@ -7,7 +7,7 @@ const Clubs = () => {
   const { data: clubs = [] } = useQuery({
     queryKey: ["clubs"],
     queryFn: async () => {
-      const res = await axios.get("/clubs");
+      const res = await axios.get("/clubs?status=approved");
       return res.data;
     },
   });

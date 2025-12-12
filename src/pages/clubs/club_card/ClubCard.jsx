@@ -12,7 +12,7 @@ const ClubCard = ({ club }) => {
       {/* Image */}
       <figure>
         <img
-          src={club.image || "https://www.russell.ca/en/recreation-and-culture/resources/Photo-Club/Photography-Banner.jpeg"}
+          src={club.bannerImage || "https://www.russell.ca/en/recreation-and-culture/resources/Photo-Club/Photography-Banner.jpeg"}
           alt={club.clubName}
           className="w-full h-48 object-cover rounded-t-2xl"
         />
