@@ -4,11 +4,12 @@ import { Link } from "react-router";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Button from "../../../../components/button/Button";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const MyClub = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure()
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["myClubs", user?.email],
     queryFn: async () => {
       const res = await axiosSecure(`/my-clubs/${user?.email}`);
@@ -24,6 +25,9 @@ const MyClub = () => {
       </div>
     );
   }
+
+  if (isLoading) return <LoadingSpinner />;
+  
 
   return (
     <div className="max-w-6xl mx-auto p-4">

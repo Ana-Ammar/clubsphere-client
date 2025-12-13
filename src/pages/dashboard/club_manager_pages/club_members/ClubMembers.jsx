@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FiUserCheck, FiUserX } from "react-icons/fi";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const ClubMembers = () => {
   const { user } = useAuth();
@@ -76,7 +77,7 @@ const ClubMembers = () => {
     });
   };
 
-  if (loadingClubs) return <p>Loading clubs...</p>;
+  if (loadingMembers || loadingClubs) return <LoadingSpinner />;
 
   return (
     <div className="p-6">

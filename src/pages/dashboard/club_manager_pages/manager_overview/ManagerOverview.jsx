@@ -2,6 +2,7 @@ import { FiUsers, FiCalendar, FiHome, FiDollarSign } from "react-icons/fi";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const ManagerOverview = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,7 +18,7 @@ const ManagerOverview = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="p-6 space-y-6">

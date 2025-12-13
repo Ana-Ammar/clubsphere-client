@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import ClubState from "./club_state/ClubState";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const ManageClubs = () => {
   const queryClient = useQueryClient();
@@ -57,7 +58,7 @@ const ManageClubs = () => {
     });
   };
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   
   return (
     <div className="p-6">

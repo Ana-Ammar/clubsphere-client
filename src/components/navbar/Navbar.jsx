@@ -56,7 +56,7 @@ const Navbar = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu bg-base-200 min-h-full w-80 p-4" onClick={() =>
+          <ul className="menu bg-base-200  p-4" onClick={() =>
                   (document.getElementById("my-drawer-2").checked = false)
                 }
               >

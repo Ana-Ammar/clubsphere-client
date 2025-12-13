@@ -7,6 +7,7 @@ import { Link } from "react-router";
 import Button from "../../../../components/button/Button";
 import EditEvent from "./edit_event/EditEvent";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const EventManagement = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,7 +17,7 @@ const EventManagement = () => {
   const queryClient = useQueryClient();
 
   // Fetch all clubs managed by this manager
-  const { data: clubs = [] } = useQuery({
+  const { data: clubs = [], isLoading } = useQuery({
     queryKey: ["myClubs", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/clubs?managerEmail=${user?.email}`);
@@ -62,6 +63,7 @@ const EventManagement = () => {
     });
   };
 
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="p-6 space-y-6">
@@ -92,60 +94,55 @@ const EventManagement = () => {
         )}
       </div>
       {/* Events Table */}
-  
-        <div className="overflow-x-auto rounded-xl shadow">
-          <table className="table table-zebra w-full">
-            <thead className="bg-base-200 text-base">
-              <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th className="text-center">Actions</th>
+
+      <div className="overflow-x-auto rounded-xl shadow">
+        <table className="table table-zebra w-full">
+          <thead className="bg-base-200 text-base">
+            <tr>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th className="text-center">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {events.map((e) => (
+              <tr key={e._id}>
+                <td>{e.title}</td>
+                <td>
+                  {e.createdAt
+                    ? new Date(e.createdAt).toLocaleDateString()
+                    : "-"}
+                </td>
+                <td>{e.location}</td>
+                <td>
+                  <span className="badge badge-primary">
+                    {e.status ?? "active"}
+                  </span>
+                </td>
+
+                <td className="flex items-center justify-center gap-3">
+                  <button
+                    onClick={() => setIsOpen(true)}
+                    className="btn btn-sm btn-info"
+                  >
+                    <FiEdit />
+                  </button>
+                  <EditEvent setIsOpen={setIsOpen} isOpen={isOpen} event={e} />
+                  <button
+                    onClick={() => handleDelete(e._id)}
+                    className="btn btn-sm btn-error"
+                  >
+                    <FiTrash2 />
+                  </button>
+                </td>
               </tr>
-            </thead>
-
-            <tbody>
-              {events.map((e) => (
-                <tr key={e._id}>
-                  <td>{e.title}</td>
-                  <td>
-                    {e.createdAt
-                      ? new Date(e.createdAt).toLocaleDateString()
-                      : "-"}
-                  </td>
-                  <td>{e.location}</td>
-                  <td>
-                    <span className="badge badge-primary">
-                      {e.status ?? "active"}
-                    </span>
-                  </td>
-
-                  <td className="flex items-center justify-center gap-3">
-                    <button
-                      onClick={() => setIsOpen(true)}
-                      className="btn btn-sm btn-info"
-                    >
-                      <FiEdit />
-                    </button>
-                    <EditEvent
-                      setIsOpen={setIsOpen}
-                      isOpen={isOpen}
-                      event={e}
-                    />
-                    <button
-                      onClick={() => handleDelete(e._id)}
-                      className="btn btn-sm btn-error"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-   
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

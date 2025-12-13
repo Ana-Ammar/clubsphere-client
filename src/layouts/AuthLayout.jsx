@@ -1,13 +1,13 @@
-import { Outlet } from "react-router";
-import Navbar from "../components/navbar/Navbar";
+import { Outlet, useNavigation } from "react-router";
+import LoadingSpinner from "../components/loading_spinner/LoadingSpinner";
 
 const AuthLayout = () => {
-    return (
-        <div>
-
-            <Outlet />
-        </div>
-    );
+  const navigation = useNavigation();
+  return (
+    <div>
+      {navigation.state === "loading" ? <LoadingSpinner /> : <Outlet />}
+    </div>
+  );
 };
 
 export default AuthLayout;

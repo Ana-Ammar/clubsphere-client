@@ -28,11 +28,13 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import ManagerRoute from "./ManagerRoute";
 import MemberRoute from "./MemberRoute";
+import ErrorPage from "../pages/error_page/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement:<ErrorPage />,
     children: [
       {
         index: true,
@@ -43,6 +45,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <SecendoryLayout />,
+    errorElement:<ErrorPage />,
     children: [
       {
         path: "/clubs",
@@ -73,6 +76,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <AuthLayout />,
+    errorElement:<ErrorPage />,
     children: [
       {
         path: "login",
@@ -87,6 +91,7 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    errorElement:<ErrorPage />,
     children: [
       {
         path: "admin-overview",

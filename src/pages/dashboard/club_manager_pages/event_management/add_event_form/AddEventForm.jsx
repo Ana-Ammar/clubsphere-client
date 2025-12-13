@@ -6,6 +6,7 @@ import {
   FiUsers,
   FiImage,
   FiCalendar,
+  FiUpload,
 } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router";
 import BackButton from "../../../../../components/back_button/BackButton";

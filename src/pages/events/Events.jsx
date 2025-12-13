@@ -1,16 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import EventCard from "./event_card/EventCard";
 import useAxios from "../../hooks/useAxios";
+import LoadingSpinner from "../../components/loading_spinner/LoadingSpinner";
 
 const Events = () => {
   const axios = useAxios();
-  const { data: events = [] } = useQuery({
+  const { data: events = [], isLoading } = useQuery({
     queryKey: ["events"],
     queryFn: async () => {
       const res = await axios.get("/events");
       return res.data;
     },
   });
+
+  if (isLoading) return <LoadingSpinner />;
+
 
   return (
     <div className="min-h-screen overflow-x-hidden py-12 px-4 sm:px-6 lg:px-12">

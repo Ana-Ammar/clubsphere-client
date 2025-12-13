@@ -1,4 +1,4 @@
-import { Link, Navigate, Outlet } from "react-router";
+import { Link, Outlet, useNavigation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { BsMenuButton } from "react-icons/bs";
 import { LiaUsersCogSolid } from "react-icons/lia";
@@ -7,11 +7,12 @@ import { GrOverview } from "react-icons/gr";
 import useRole from "../hooks/useRole";
 import { SiEventstore, SiMyspace } from "react-icons/si";
 import BackButton from "../components/back_button/BackButton";
+import LoadingSpinner from "../components/loading_spinner/LoadingSpinner";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const { role } = useRole();
-  <Navigate to="member-overview"></Navigate>;
+  const navigation = useNavigation()
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -41,7 +42,7 @@ const Dashboard = () => {
 
         {/* Page content here */}
         <div className="p-4">
-          <Outlet />
+                {navigation.state === "loading" ? <LoadingSpinner /> : <Outlet />}
         </div>
       </div>
 

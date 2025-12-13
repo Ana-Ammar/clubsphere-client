@@ -2,6 +2,7 @@ import { FiUsers } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const EventRegistrations = () => {
 
@@ -9,7 +10,7 @@ const EventRegistrations = () => {
   const { user } = useAuth();
 
   // Fetch events (simple list)
-  const { data: data = [] } = useQuery({
+  const { data: data = [], isLoading } = useQuery({
     queryKey: ["eventsRegistration", user?.email],
     queryFn: async () => {
       const res = await axiosSecure(`/total-event-registration/${user?.email}`);
@@ -17,6 +18,7 @@ const EventRegistrations = () => {
     },
   });
 
+  if (isLoading) return <LoadingSpinner />;
 
 
   return (

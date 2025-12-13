@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const AdminOverview = () => {
   const axiosSecure = useAxiosSecure();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["adminSummary"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin-summary");
@@ -45,6 +45,8 @@ const AdminOverview = () => {
       color: "from-orange-500 to-orange-700",
     },
   ];
+  if (isLoading)return <LoadingSpinner />;
+
   return (
     <div className="p-6 md:p-10 space-y-6">
       <h1 className="text-3xl font-bold tracking-tight">Admin Overview</h1>

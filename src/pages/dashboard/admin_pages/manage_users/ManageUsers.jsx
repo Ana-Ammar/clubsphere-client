@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 
 const ManageUsers = () => {
@@ -62,7 +63,7 @@ const ManageUsers = () => {
   };
 
   if(isLoading) {
-    return <p>Coming soon.........</p>
+    <LoadingSpinner />
   }
 
   return (

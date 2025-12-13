@@ -62,7 +62,7 @@ const Profile = () => {
           className="drawer-overlay"
         ></label>
         <ul
-          className="menu bg-base-100 space-y-2 w-50 p-4 rounded-2xl"
+          className="menu bg-base-100 space-y-2 w-50 p-4 rounded-3xl"
           onClick={() => {
             document.getElementById("my-drawer-5").checked = false;
           }}

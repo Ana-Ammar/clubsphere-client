@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import LoadingSpinner from "../../../components/loading_spinner/LoadingSpinner";
 
 const ClubDetails = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const ClubDetails = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
 
-  const { data: club = {} } = useQuery({
+  const { data: club = {}, isLoading } = useQuery({
     queryKey: ["club", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/clubs/${id}`);
@@ -36,7 +37,7 @@ const ClubDetails = () => {
 
   const isMember = checkMembership.length > 0 ? true : false;
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (payload) => {
       const res = await axiosSecure.post("/memberships", payload);
       return res.data;
@@ -62,48 +63,49 @@ const ClubDetails = () => {
   });
 
   const handleJoinBtn = async () => {
-  const joinInfo = {
-    userEmail: user.email,
-    clubId: club._id,
+    const joinInfo = {
+      userEmail: user.email,
+      clubId: club._id,
+    };
+
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to join ${club.clubName}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Join!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    if (club.membershipFee > 0) {
+      const paymentInfo = {
+        membershipFee: club.membershipFee,
+        userEmail: user?.email,
+        clubId: club._id,
+        clubName: club.clubName,
+      };
+      const res = await axiosSecure.post(
+        "/payment-checkout-session",
+        paymentInfo
+      );
+
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+        return;
+      }
+    }
+    mutate(joinInfo);
   };
 
-  const result = await Swal.fire({
-    title: "Are you sure?",
-    text: `Do you want to join ${club.clubName}?`,
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, Join!",
-  });
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  if (!result.isConfirmed) return;
-
-
-  if (club.membershipFee > 0) {
-    const paymentInfo = {
-      membershipFee: club.membershipFee,
-      userEmail: user?.email,
-      clubId: club._id,
-      clubName: club.clubName,
-    };
-    const res = await axiosSecure.post(
-      "/payment-checkout-session",
-      paymentInfo
-    );
-
-    if (res.data?.url) {
-      window.location.href = res.data.url; 
-      return; 
-    }
-  }
-  mutate(joinInfo);
-};
-
-
-useEffect(() => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}, []);
+  if (isLoading) return <LoadingSpinner />;
+  if (isPending) return <LoadingSpinner />;
 
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-8">
@@ -182,7 +184,6 @@ useEffect(() => {
           name={`${isMember ? "You are already Member" : "Join Now"}`}
         ></Button>
       </div>
-
     </div>
   );
 };

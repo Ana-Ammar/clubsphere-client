@@ -1,3 +1,4 @@
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +15,7 @@ const MyEvents = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">My Events</h2>

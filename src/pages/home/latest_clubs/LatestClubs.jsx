@@ -15,7 +15,7 @@ const LatestClubs = () => {
   });
 
   return (
-    <div className="py-16 w-11/12 mx-auto">
+    <section className="py-16">
       {/* Page Headline */}
       <h2 className="text-3xl font-bold text-center mb-10">Featured Clubs</h2>
 
@@ -51,7 +51,7 @@ const LatestClubs = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

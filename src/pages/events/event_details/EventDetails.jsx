@@ -11,6 +11,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../components/loading_spinner/LoadingSpinner";
 
 const EventDetails = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const EventDetails = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: event = {} } = useQuery({
+  const { data: event = {}, isLoading } = useQuery({
     queryKey: ["event", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/events/${id}`);
@@ -42,7 +43,7 @@ const EventDetails = () => {
   const { mutate } = useMutation({
     mutationFn: async (payload) => {
       const res = await axiosSecure.post("/eventRegistrations", payload);
-      console.log(res.data)
+      console.log(res.data);
       return res.data;
     },
 
@@ -85,6 +86,9 @@ const EventDetails = () => {
       }
     });
   };
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className="max-w-4xl mx-auto p-4 md:p-8">
       <BackButton
@@ -120,8 +124,6 @@ const EventDetails = () => {
           <FaMapMarkerAlt className="text-gray-500" />
           <span className="font-medium">{event.location}</span>
         </div>
-
-    
 
         {event.maxAttendees && (
           <div className="flex items-center gap-3 text-gray-700">

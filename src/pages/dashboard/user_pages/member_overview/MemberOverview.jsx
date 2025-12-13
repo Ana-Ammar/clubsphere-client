@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import { FiUsers, FiCalendar } from "react-icons/fi";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const MemberOverview = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  const { data: summary = [] } = useQuery({
+  const { data: summary = [], isLoading } = useQuery({
     queryKey: ["memberSummary", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/member-summary/${user?.email}`);
@@ -16,7 +17,8 @@ const MemberOverview = () => {
     },
   });
 
-  console.log(summary)
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className="p-6 space-y-6">
       {/* Welcome Card */}

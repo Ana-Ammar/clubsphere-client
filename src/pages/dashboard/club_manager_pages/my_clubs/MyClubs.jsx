@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
 import { useState } from "react";
 import EditClub from "./edit_club/EditClub";
+import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinner";
 
 const MyClubs = () => {
   const [isOpen, setIsOpen] = useState();
@@ -20,11 +21,7 @@ const MyClubs = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <div className="text-center py-10 text-lg font-semibold">Loading...</div>
-    );
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="p-5">
@@ -72,8 +69,10 @@ const MyClubs = () => {
 
                 <td className="flex items-center gap-3 justify-center">
                   {/* View Button */}
-                  <Link to={`/club-details/${club._id}`} className="btn btn-sm btn-info text-white flex items-center gap-1">
-                   
+                  <Link
+                    to={`/club-details/${club._id}`}
+                    className="btn btn-sm btn-info text-white flex items-center gap-1"
+                  >
                     <FiEye size={16} /> View
                   </Link>
 
@@ -82,7 +81,7 @@ const MyClubs = () => {
                     onClick={() => setIsOpen(true)}
                     className="btn btn-sm btn-warning text-white flex items-center gap-1"
                   >
-                   <EditClub
+                    <EditClub
                       club={club}
                       setIsOpen={setIsOpen}
                       isOpen={isOpen}
