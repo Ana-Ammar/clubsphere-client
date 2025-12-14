@@ -30,6 +30,7 @@ import ManagerRoute from "./ManagerRoute";
 import MemberRoute from "./MemberRoute";
 import ErrorPage from "../pages/error_page/ErrorPage";
 import ClubPayments from "../pages/dashboard/club_manager_pages/club_payments/ClubPayments";
+import AllPayments from "../pages/dashboard/admin_pages/payment_page/AllPayments";
 
 export const router = createBrowserRouter([
   {
@@ -115,6 +116,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageClubs />
+          </AdminRoute>
+        ),
+      },
+       {
+        path: "all-payments",
+        element: (
+          <AdminRoute>
+            <AllPayments />
           </AdminRoute>
         ),
       },

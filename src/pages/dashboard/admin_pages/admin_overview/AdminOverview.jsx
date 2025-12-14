@@ -42,7 +42,7 @@ const AdminOverview = () => {
     {
       title: "Events",
       count: summary.events,
-      icon: <FaCalendarAlt className="text-4xl" />,
+      icon: <FaCalendarAlt className="text-4xl" />, 
       color: "from-orange-500 to-orange-700",
     },
   ];

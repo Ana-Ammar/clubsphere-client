@@ -95,6 +95,19 @@ const Dashboard = () => {
                     <span className="is-drawer-close:hidden">Manage Clubs</span>
                   </Link>
                 </li>
+
+                 <li>
+                  <Link
+                    to="all-payments"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="All Payments"
+                  >
+                    <MdPayment size={24} />
+                    <span className="is-drawer-close:hidden">
+                      All Payments
+                    </span>
+                  </Link>
+                </li>
               </>
             )}
 

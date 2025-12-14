@@ -1,19 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import useAuth from "../../../../hooks/useAuth";
 
-
-const ClubPayments = () => {
+const AllPayments = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
 
   const { data: payments = [], isLoading } = useQuery({
-    queryKey: ["manager-payments", user?.email],
-    enabled: !!user?.email,
+    queryKey: ["all-payments"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/total-club-payments/${user.email}`
-      );
+      const res = await axiosSecure.get("/all-payments");
       return res.data;
     },
   });
@@ -30,7 +24,7 @@ const ClubPayments = () => {
     <div className="p-6">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <h2 className="text-2xl font-bold">Club Payments</h2>
+        <h2 className="text-2xl font-bold">All Payments</h2>
       </div>
 
       {/* Table */}
@@ -55,9 +49,7 @@ const ClubPayments = () => {
               payments.map((payment, index) => (
                 <tr key={payment._id}>
                   <td>{index + 1}</td>
-                  <td className="font-medium">
-                    {payment.clubName}
-                  </td>
+                  <td className="font-medium">{payment.clubName}</td>
                   <td>{payment.userEmail}</td>
                   <td className="text-xs text-gray-500 break-all">
                     {payment.paymentId}
@@ -72,4 +64,4 @@ const ClubPayments = () => {
   );
 };
 
-export default ClubPayments;
+export default AllPayments;

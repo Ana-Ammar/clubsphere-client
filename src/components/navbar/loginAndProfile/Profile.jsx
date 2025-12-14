@@ -104,6 +104,9 @@ const Profile = () => {
                   Events Registrations
                 </Link>
               </li>
+              <li>
+                <Link to="/dashboard/club-payments">Payments</Link>
+              </li>
             </>
           )}
 
@@ -119,6 +122,9 @@ const Profile = () => {
 
               <li>
                 <Link to="/dashboard/manage-clubs">Manage Clubs</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/all-payments">Payments</Link>
               </li>
             </>
           )}
