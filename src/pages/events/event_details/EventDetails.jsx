@@ -1,9 +1,5 @@
-import {
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaDollarSign,
-  FaUsers,
-} from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaMapMarkerAlt, FaCalendarAlt, FaUsers } from "react-icons/fa";
 import Button from "../../../components/button/Button";
 import { useNavigate, useParams } from "react-router";
 import BackButton from "../../../components/back_button/BackButton";
@@ -12,6 +8,8 @@ import useAuth from "../../../hooks/useAuth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../../components/loading_spinner/LoadingSpinner";
+import { useEffect } from "react";
+import useRole from "../../../hooks/useRole";
 
 const EventDetails = () => {
   const navigate = useNavigate();
@@ -19,6 +17,18 @@ const EventDetails = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const { role } = useRole();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
 
   const { data: event = {}, isLoading } = useQuery({
     queryKey: ["event", id],
@@ -32,7 +42,7 @@ const EventDetails = () => {
     queryKey: ["checkRegistration", id, user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/eventRegistrations?eventId=${id}&userEmail=${user.email}`
+        `/eventRegistrations?eventId=${id}&userEmail=${user?.email}`
       );
       return res.data;
     },
@@ -90,7 +100,12 @@ const EventDetails = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8">
+    <motion.div
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      className="max-w-4xl mx-auto p-4 md:p-8"
+    >
       <BackButton
         name="Back"
         color="black"
@@ -140,14 +155,14 @@ const EventDetails = () => {
         <div className="mt-4">
           <Button
             handleBtn={handleRegBtn}
-            disabled={isRegister ? true : false}
+            disabled={isRegister || role.role === "clubManager" ? true : false}
             name={`${
               isRegister ? "You have already regestered" : "Register Now"
             }`}
           ></Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

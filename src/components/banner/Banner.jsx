@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Navbar from "../navbar/Navbar";
@@ -38,6 +39,14 @@ const heroSlides = [
 ];
 
 const Banner = () => {
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
   return (
     <header className="relative w-full h-[80vh] mx-auto">
       {/* Swiper Background */}
@@ -55,7 +64,12 @@ const Banner = () => {
             >
               {/* Overlay */}
               <div className="absolute inset-0 bg-white/20 backdrop-blur-xs flex items-center px-6">
-                <div className="mx-auto flex flex-col items-center bg-white/20 p-6 rounded-2xl mt-10 md:mt-0">
+                <motion.div
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  className="mx-auto flex flex-col items-center bg-white/20 p-6 rounded-2xl mt-10 md:mt-0"
+                >
                   <h2 className="text-4xl font-bold text-gray-900 mb-3">
                     {slide.title}
                   </h2>
@@ -71,7 +85,7 @@ const Banner = () => {
                   >
                     {slide.buttonText}
                   </Link>
-                </div>
+                </motion.div>
               </div>
             </div>
           </SwiperSlide>

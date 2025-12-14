@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaDollarSign, FaUserTie } from "react-icons/fa";
 import Button from "../../../components/button/Button";
 import BackButton from "../../../components/back_button/BackButton";
@@ -8,6 +9,7 @@ import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import LoadingSpinner from "../../../components/loading_spinner/LoadingSpinner";
+import useRole from "../../../hooks/useRole";
 
 const ClubDetails = () => {
   const navigate = useNavigate();
@@ -15,6 +17,19 @@ const ClubDetails = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const { role } = useRole();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
 
   const { data: club = {}, isLoading } = useQuery({
     queryKey: ["club", id],
@@ -100,15 +115,16 @@ const ClubDetails = () => {
     mutate(joinInfo);
   };
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
   if (isLoading) return <LoadingSpinner />;
   if (isPending) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto p-4 md:p-8">
+    <motion.div
+      variants={sectionVariants}
+      initial="hidden"
+      whileInView="visible"
+      className="max-w-5xl mx-auto p-4 md:p-8"
+    >
       {/* Back Button */}
       <BackButton
         name="Back"
@@ -177,14 +193,14 @@ const ClubDetails = () => {
         <Button
           handleBtn={handleJoinBtn}
           disabled={
-            checkMembership?.length > 0 || club?.managerEmail === user?.email
+            checkMembership?.length > 0 || role.role === "clubManager"
               ? true
               : false
           }
           name={`${isMember ? "You are already Member" : "Join Now"}`}
         ></Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

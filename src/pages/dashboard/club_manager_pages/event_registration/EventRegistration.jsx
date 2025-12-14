@@ -13,10 +13,11 @@ const EventRegistrations = () => {
   const { data: data = [], isLoading } = useQuery({
     queryKey: ["eventsRegistration", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure(`/total-event-registration/${user?.email}`);
+      const res = await axiosSecure(`/total-event-registrations/${user?.email}`);
       return res.data;
     },
   });
+  console.log(data)
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -32,7 +33,7 @@ const EventRegistrations = () => {
             <th>Club Name</th>
             <th>Event Name</th>
             <th>Registered Users</th>
-            <th>Total Registrations</th>
+            <th>Registrations Status</th>    
           </tr>
         </thead>
         <tbody>
@@ -40,22 +41,9 @@ const EventRegistrations = () => {
             <tr key={event._id}>
               <td>{idx + 1}</td>
               <td>{event.clubName}</td>
-              <td>{event.title}</td>
-              <td>
-                {event.registrations.length > 0 ? (
-                  <ul>
-                    {event.registrations.map((r, i) => (
-                      <li key={i}>
-                        <FiUsers className="inline mr-1" />
-                        {r.userEmail} ({r.status})
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  "No registrations"
-                )}
-              </td>
-              <td>{event.registrations.length}</td>
+              <td>{event.eventName}</td>
+              <td>{event.userEmail}</td>
+              <td>{event.status}</td>
             </tr>
           ))}
         </tbody>

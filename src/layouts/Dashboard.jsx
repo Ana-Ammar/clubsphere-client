@@ -2,7 +2,7 @@ import { Link, Outlet, useNavigation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { BsMenuButton } from "react-icons/bs";
 import { LiaUsersCogSolid } from "react-icons/lia";
-import { MdAppRegistration, MdManageHistory } from "react-icons/md";
+import { MdAppRegistration, MdManageHistory, MdPayment } from "react-icons/md";
 import { GrOverview } from "react-icons/gr";
 import useRole from "../hooks/useRole";
 import { SiEventstore, SiMyspace } from "react-icons/si";
@@ -12,7 +12,7 @@ import LoadingSpinner from "../components/loading_spinner/LoadingSpinner";
 const Dashboard = () => {
   const { user } = useAuth();
   const { role } = useRole();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -42,7 +42,7 @@ const Dashboard = () => {
 
         {/* Page content here */}
         <div className="p-4">
-                {navigation.state === "loading" ? <LoadingSpinner /> : <Outlet />}
+          {navigation.state === "loading" ? <LoadingSpinner /> : <Outlet />}
         </div>
       </div>
 
@@ -161,63 +161,74 @@ const Dashboard = () => {
                     </span>
                   </Link>
                 </li>
+
+                <li>
+                  <Link
+                    to="club-payments"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Club Payments"
+                  >
+                    <MdPayment size={24} />
+                    <span className="is-drawer-close:hidden">
+                      Club Payments
+                    </span>
+                  </Link>
+                </li>
               </>
             )}
 
             {/* member Pages */}
-            {
-              (role.role === "member" && (
-                <>
-                  <li>
-                    <Link
-                      to="member-overview"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Member Overview"
+            {role.role === "member" && (
+              <>
+                <li>
+                  <Link
+                    to="member-overview"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Member Overview"
+                  >
+                    {/* Home icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      fill="none"
+                      stroke="currentColor"
+                      className="my-1.5 inline-block size-4"
                     >
-                      {/* Home icon */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth="2"
-                        fill="none"
-                        stroke="currentColor"
-                        className="my-1.5 inline-block size-4"
-                      >
-                        <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                        <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                      </svg>
-                      <span className="is-drawer-close:hidden">
-                        Manager Overview
-                      </span>
-                    </Link>
-                  </li>
+                      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                      <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    </svg>
+                    <span className="is-drawer-close:hidden">
+                      Manager Overview
+                    </span>
+                  </Link>
+                </li>
 
-                  <li>
-                    <Link
-                      to="my-clubs"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="My Clubs"
-                    >
-                      <SiMyspace size={24} />
-                      <span className="is-drawer-close:hidden">My Clubs</span>
-                    </Link>
-                  </li>
+                <li>
+                  <Link
+                    to="my-clubs"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Clubs"
+                  >
+                    <SiMyspace size={24} />
+                    <span className="is-drawer-close:hidden">My Clubs</span>
+                  </Link>
+                </li>
 
-                  <li>
-                    <Link
-                      to="my-events"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="My Events"
-                    >
-                      <SiEventstore size={24} />
-                      <span className="is-drawer-close:hidden">My Events</span>
-                    </Link>
-                  </li>
-                </>
-              ))
-            }
+                <li>
+                  <Link
+                    to="my-events"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Events"
+                  >
+                    <SiEventstore size={24} />
+                    <span className="is-drawer-close:hidden">My Events</span>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
           <div className="w-10/12 mx-auto my-4">
             <span className="is-drawer-close:hidden">

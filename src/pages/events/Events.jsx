@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import EventCard from "./event_card/EventCard";
 import useAxios from "../../hooks/useAxios";
@@ -12,12 +13,24 @@ const Events = () => {
       return res.data;
     },
   });
+    const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
 
   if (isLoading) return <LoadingSpinner />;
 
 
   return (
-    <div className="min-h-screen overflow-x-hidden py-12 px-4 sm:px-6 lg:px-12">
+    <motion.div
+     variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+     className="min-h-screen overflow-hidden py-12 px-4 sm:px-6 lg:px-12">
       {/* Page Title */}
       <h1 className="text-3xl font-bold text-center mb-8">Upcoming Events</h1>
 
@@ -27,7 +40,7 @@ const Events = () => {
           <EventCard event={event} key={event?._id}></EventCard>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

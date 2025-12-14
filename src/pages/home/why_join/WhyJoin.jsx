@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   FiTrendingUp,
   FiUsers,
@@ -38,6 +39,14 @@ const categories = [
 ];
 
 const WhyJoin = () => {
+    const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
+  };
     return (
          <section className="py-16">
       {/* WHY JOIN SECTION */}
@@ -57,7 +66,12 @@ const WhyJoin = () => {
       </div>
 
       {/* POPULAR CATEGORIES */}
-      <h2 className="text-3xl font-bold text-center mb-8">Popular Categories</h2>
+    <motion.div
+    variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+    >
+        <h2 className="text-3xl font-bold text-center mb-8">Popular Categories</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
         {categories.map((c, i) => (
@@ -70,6 +84,7 @@ const WhyJoin = () => {
           </div>
         ))}
       </div>
+    </motion.div>
     </section>
     );
 };
