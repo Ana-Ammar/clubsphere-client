@@ -1,21 +1,14 @@
-import { motion } from "framer-motion";
+
 import { FaMapMarkerAlt, FaInfoCircle } from "react-icons/fa";
 import Button from "../../../components/button/Button";
 import { Link } from "react-router";
 
 const ClubCard = ({ club }) => {
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: "easeOut" },
-    },
-  };
+
   return (
-    <motion.div
+    <div
      
-      className="card bg-gray-100 shadow-lg rounded-2xl border border-gray-200 hover:shadow-2xl transition duration-300"
+      className="card justify-between  bg-gray-100 shadow-lg rounded-2xl border border-gray-200 hover:shadow-2xl transition duration-300"
     >
       {/* Image */}
       <figure>
@@ -67,7 +60,7 @@ const ClubCard = ({ club }) => {
           <Button name="View Details" icon={FaInfoCircle}></Button>
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

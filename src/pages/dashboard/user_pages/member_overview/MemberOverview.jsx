@@ -12,7 +12,6 @@ const MemberOverview = () => {
     queryKey: ["memberSummary", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/member-summary/${user?.email}`);
-      console.log(res.data)
       return res.data;
     },
   });

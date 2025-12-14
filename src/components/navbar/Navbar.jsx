@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import Profile from "./loginAndProfile/Profile";
 // import logo from "../../../../../../Downloads/logo.png";
 
@@ -38,9 +38,11 @@ const Navbar = () => {
                 </svg>
               </label>
             </div>
-            <h1 className="flex-1 font-black text-2xl md:text-3xl flex items-center">
+           <Link to="/" className="flex-1">
+             <h1 className="font-black text-2xl md:text-3xl flex items-center">
              <span className="bg-white/20 rounded-4xl py-2 px-4">ClubSphere</span>
             </h1>
+           </Link>
             <div className="hidden flex-none lg:block">
               <ul className="menu menu-horizontal bg-white/20 rounded-4xl mr-2">
                 {links}

@@ -1,4 +1,3 @@
-import { FiUsers } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
@@ -43,7 +42,11 @@ const EventRegistrations = () => {
               <td>{event.clubName}</td>
               <td>{event.eventName}</td>
               <td>{event.userEmail}</td>
-              <td>{event.status}</td>
+              <td className={`mt-2 text-base-100 badge ${
+                      event.eventStatus === "registered"
+                        ? "badge-success"
+                        : "badge-error"
+                    }`}>{event.status}</td>
             </tr>
           ))}
         </tbody>

@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const EventCard = ({ event }) => {
   const [showInfo, setShowInfo] = useState(false);
-  console.log(event)
+
 
   return (
     <div
@@ -16,7 +16,7 @@ const EventCard = ({ event }) => {
     >
       {/* Background Image */}
       <img
-        src={event.image || "https://www.bbcclub.com/wp-content/uploads/2022/03/bbcclub-connect-photography-02.jpg"}
+        src={event.bannerImage || "https://www.bbcclub.com/wp-content/uploads/2022/03/bbcclub-connect-photography-02.jpg"}
         alt={event.title}
         className={`w-full h-full object-cover transition-transform duration-500 ${showInfo ? "scale-110" : "group-hover:scale-110"}`}
       />
@@ -38,7 +38,7 @@ const EventCard = ({ event }) => {
           {/* Date */}
           <div className="flex items-center gap-2">
             <FaCalendarAlt />
-            <span>{new Date(event.eventDate).toLocaleDateString()}</span>
+            <span>{new Date(event.date).toLocaleDateString()}</span>
           </div>
 
           {/* Location */}

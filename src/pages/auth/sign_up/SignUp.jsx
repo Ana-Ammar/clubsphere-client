@@ -28,7 +28,6 @@ const SignUp = () => {
 
   const handleSignUp = (data) => {
     const uploadedImg = data.photo[0];
-    console.log(data);
     createUser(data.email, data.password)
       .then((res) => {
         // upload image
@@ -49,7 +48,7 @@ const SignUp = () => {
           };
           axiosSecure.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              console.log("user created in the database");
+              // console.log("user created in the database");
             }
           });
 
@@ -82,7 +81,7 @@ const SignUp = () => {
         });
       })
       .catch((err) => {
-        console.log("in Create user", err);
+        // console.log("in Create user", err);
       });
   };
   return (

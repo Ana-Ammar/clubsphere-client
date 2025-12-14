@@ -2,7 +2,7 @@ import LoadingSpinner from "../../../../components/loading_spinner/LoadingSpinne
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { FiCalendar } from 'react-icons/fi';
+
 
 const MyEvents = () => {
   const { user } = useAuth();
@@ -34,7 +34,6 @@ const MyEvents = () => {
             {events.map((event, idx) => (
               <tr key={idx}>
                 <td className="flex items-center gap-2">
-                  <FiCalendar className="text-blue-500" />
                   {event.eventTitle}
                 </td>
                 <td>{event.clubName}</td>

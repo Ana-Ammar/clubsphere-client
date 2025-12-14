@@ -64,6 +64,8 @@ const AddClub = () => {
             <option value="Tech">Tech</option>
             <option value="Music">Music</option>
             <option value="Art">Art</option>
+            <option value="Anime">Anime</option>
+            <option value="Business">Business</option>
           </select>
         </div>
 

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 
-
 const ClubPayments = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -11,9 +10,7 @@ const ClubPayments = () => {
     queryKey: ["manager-payments", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/total-club-payments/${user.email}`
-      );
+      const res = await axiosSecure.get(`/total-club-payments/${user.email}`);
       return res.data;
     },
   });
@@ -41,7 +38,8 @@ const ClubPayments = () => {
               <th>#</th>
               <th>Club Name</th>
               <th>User Email</th>
-              <th>Payment ID</th>
+              <th>Transaction ID</th>
+              <th>Payment Status</th>
             </tr>
           </thead>
           <tbody>
@@ -55,12 +53,13 @@ const ClubPayments = () => {
               payments.map((payment, index) => (
                 <tr key={payment._id}>
                   <td>{index + 1}</td>
-                  <td className="font-medium">
-                    {payment.clubName}
-                  </td>
-                  <td>{payment.userEmail}</td>
+                  <td className="font-medium">{payment.clubName}</td>
+                  <td>{payment.customerEmail}</td>
                   <td className="text-xs text-gray-500 break-all">
-                    {payment.paymentId}
+                    {payment.transactionId}
+                  </td>
+                   <td className={`mt-2 ${payment.paymentStatus === "paid" ? "badge badge-success" : "badge badge-error"} `}>
+                    {payment.paymentStatus}
                   </td>
                 </tr>
               ))

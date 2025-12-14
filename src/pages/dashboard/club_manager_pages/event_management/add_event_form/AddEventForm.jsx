@@ -123,18 +123,6 @@ const AddEventForm = () => {
           )}
         </div>
 
-        <div>
-          <label className="font-semibold">Event Image URL</label>
-          <div className="flex items-center gap-2">
-            <FiUpload size={20} className="text-primary" />
-            <input
-              type="text"
-              {...register("eventImage", { required: true })}
-              className="input-field w-full"
-              placeholder="Paste image link here"
-            />
-          </div>
-        </div>
 
         {/* Max Attendees */}
         <div>

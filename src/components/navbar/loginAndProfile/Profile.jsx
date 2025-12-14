@@ -7,7 +7,6 @@ import useRole from "../../../hooks/useRole";
 const Profile = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
-  console.log();
 
   const handleLogOut = () => {
     logOut()
@@ -21,7 +20,7 @@ const Profile = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
   return (

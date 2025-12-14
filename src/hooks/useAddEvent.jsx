@@ -9,7 +9,6 @@ export const useAddEvent = () => {
   return useMutation({
     mutationFn: async (eventData) => {
       const res = await axiosSecure.post("/events", eventData);
-      console.log(res.data)
       return res.data;
     },
     onSuccess: () => {

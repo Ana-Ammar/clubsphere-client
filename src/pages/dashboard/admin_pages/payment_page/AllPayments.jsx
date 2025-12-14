@@ -35,7 +35,8 @@ const AllPayments = () => {
               <th>#</th>
               <th>Club Name</th>
               <th>User Email</th>
-              <th>Payment ID</th>
+              <th>Transaction ID</th>
+              <th>User Status</th>
             </tr>
           </thead>
           <tbody>
@@ -50,10 +51,11 @@ const AllPayments = () => {
                 <tr key={payment._id}>
                   <td>{index + 1}</td>
                   <td className="font-medium">{payment.clubName}</td>
-                  <td>{payment.userEmail}</td>
+                  <td>{payment.customerEmail}</td>
                   <td className="text-xs text-gray-500 break-all">
-                    {payment.paymentId}
+                    {payment.transactionId}
                   </td>
+                  <td className={`mt-2 ${payment.paymentStatus === "paid" ? "badge badge-success" : "badge badge-error"} `}>{payment.paymentStatus}</td>
                 </tr>
               ))
             )}

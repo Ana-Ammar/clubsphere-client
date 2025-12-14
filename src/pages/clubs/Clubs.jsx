@@ -66,8 +66,9 @@ const Clubs = () => {
           >
             <option value="">All Categories</option>
             <option value="Sports">Sports</option>
-            <option value="Technology">Technology</option>
-            <option value="Cultural">Cultural</option>
+            <option value="Tech">Tech</option>
+            <option value="Photography">Photography</option>
+            <option value="Anime">Anime</option>
             <option value="Business">Business</option>
             <option value="Art">Art</option>
           </select>

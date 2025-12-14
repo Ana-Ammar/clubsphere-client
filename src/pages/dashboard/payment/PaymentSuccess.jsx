@@ -30,7 +30,7 @@ const PaymentSuccess = () => {
   }
 
   const { paymentInfo } = data;
-  console.log(data);
+
 
   return (
     <div className="max-w-md mx-auto p-6 mt-10 bg-gray-50 rounded-xl shadow-md text-center">

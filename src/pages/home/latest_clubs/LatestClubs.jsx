@@ -24,7 +24,7 @@ const LatestClubs = () => {
         {clubs.map((club) => (
           <div
             key={club._id}
-            className="card bg-white shadow-lg rounded-2xl border border-gray-200 hover:shadow-2xl overflow-hidden transition-all duration-200"
+            className="card justify-between bg-white shadow-lg rounded-2xl border border-gray-200 hover:shadow-2xl overflow-hidden transition-all duration-200"
           >
             {/* Banner Image */}
             <div className="w-full h-40 md:h-48 overflow-hidden">

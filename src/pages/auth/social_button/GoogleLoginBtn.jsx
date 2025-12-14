@@ -12,7 +12,6 @@ const GoogleLoginBtn = () => {
   const handleGoogleLogin = () => {
     loginUserWithGoogle()
       .then((res) => {
-        console.log(res, "token res:", res._tokenResponse.firstName);
         // Add user to database
         const userInfo = {
           email: res.user.email,

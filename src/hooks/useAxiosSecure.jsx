@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5165",
+  baseURL: "https://clubsphere-server-three.vercel.app",
 });
 
 const useAxiosSecure = () => {
